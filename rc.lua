@@ -81,7 +81,6 @@ awful.layout.layouts = {
 -- }}}
 
 date = wibox.widget.textclock(" %a %b %d ")
-time = wibox.widget.textclock("%H\n%M",10)
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -202,9 +201,16 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "left", screen = s, width = 42})
 
+    local time = {
+        font = "Iosevka",
+        align = "center",
+        valign = "center",
+        widget = wibox.widget.textclock("%H\n%M",10)
+    }
+
     local vol = wibox.widget {
         markup = "",
-        --font = beautiful.icon_font_name .. "Round 12",
+        font = "Iosevka Nerd Font Mono Round 12",
         align = "center",
         valign = "center",
         widget = wibox.widget.textbox
@@ -233,37 +239,38 @@ awful.screen.connect_for_each_screen(function(s)
         end)
     ))
 
+    local start = wibox.widget {
+        markup = "",
+        font = "Iosevka Nerd Font Mono Round 12",
+        align = "center",
+        valign = "center",
+        widget = wibox.widget.textbox
+    }
+
     local dpi = beautiful.xresources.apply_dpi
     -- Add widgets to the wibox
     s.mywibox:setup {
         {
-            layout = wibox.layout.align.vertical,
+            start,
             { -- Top widgets
+                s.mylayoutbox,
                 layout = wibox.layout.fixed.vertical,
-                top = dpi(10),
-                bottom = dpi(5),
                 widget = wibox.container.margin
                 --s.mytaglist,
                 --s.mypromptbox,
             },
             { -- Bottom widgets
-                --layout = wibox.layout.fixed.vertical,
-                time,
                 vol,
-                s.mylayoutbox,
+                time,
                 --date,
-                spacing = dpi(10),
+                spacing = dpi(18),
                 layout = wibox.layout.fixed.vertical,
             },
-        },
-        { --center widgets
-            valign = "center",
-            halign = "center",
-            layout = wibox.container.place
+            layout = wibox.layout.align.vertical,
         },
         left = dpi(4),
         right = dpi(4),
-        top = dpi(10),
+        top = dpi(4),
         bottom = dpi(10),
         widget = wibox.container.margin
     }
