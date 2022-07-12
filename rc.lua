@@ -253,7 +253,11 @@ awful.screen.connect_for_each_screen(function(s)
         {
             start,
             { -- Top widgets
-                s.mylayoutbox,
+                wibox.widget {
+                    s.mylayoutbox,
+                    margins = dpi(8),
+                    widget = wibox.container.margin
+                },
                 layout = wibox.layout.fixed.vertical,
                 widget = wibox.container.margin
                 --s.mytaglist,
@@ -271,7 +275,7 @@ awful.screen.connect_for_each_screen(function(s)
         left = dpi(4),
         right = dpi(4),
         top = dpi(4),
-        bottom = dpi(10),
+        bottom = dpi(18),
         widget = wibox.container.margin
     }
 end)
